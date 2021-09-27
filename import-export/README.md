@@ -5,21 +5,21 @@ In JS a module is a single script or just a file. Modules can load each others w
 * `import` - is used to import above exported functions and variables from other modules
 
 Example of `export`
-```
+```js
 export function sayHi(user) {
     alert(`Hello, ${user}`)
 }
 ```
 
 Example of `import`
-```
+```js
 import { sayHi } from './sayHi.js';
 
 sayHi('Naira')
 ```
 
 To run this code in browser JS uses `<script>` tags and giving a `type="module"` attribute to the tag.
-```
+```html
 <!doctype html>
 <script type="module">
   import {sayHi} from './sayHi.js';
@@ -30,14 +30,14 @@ To run this code in browser JS uses `<script>` tags and giving a `type="module"`
 ##Core features(module vs regular)
 * __Always strict mode__ 
 assigning value to an undeclared variables throws error in module script
-```
+```html
 <script type="module">
   b = 5; // error
 </script>
 ```
 * __Module level scope__
 Each module has its top scope, which means that anything declared(and not exported) in one module cannot be seen and used in other modules
-In the example we cann se that variable `user` from module `user.js` is used in `hello.js`. But the variable `user` is not exported(from`user.js`) and imported(in `hello.js`). So this will result in error.
+In the example we can see that variable `user` from module `user.js` is used in `hello.js`. But the variable `user` is not exported(from`user.js`) and imported(in `hello.js`). So this will result in error.
   This also implies that in `html` files, the variables inside ```<script type="module">``` is not accessible from other script if not exported.
   
 _Note:_ This does not mean that one cannot use global `window` to have window level variables
@@ -47,7 +47,7 @@ The module can be imported in the code multiple times, but the code in the modul
   The consequences of this are: 
   * For example if we have side effects(like alerting something), and we import the same alerting module twice, the message will be alerted only once
   * If object is exported from module, and the object is imported multiple times in other module. The object is initialized only on first import. And the created object is passed to other importers. So all the imports point to same admin object reference.
-```
+```js
 export let presenters = {
     name: "Naira"
 };
@@ -78,7 +78,7 @@ For Regular scripts async attribute works only for external scripts, but for mod
 * __Compatibility__
     Old browsers do not support `type="module"`, in order to have modules in old browser we can use `nomodule` attribute on script
   
-```+
+```html
 <script type="module">
   alert("Runs in modern browsers");
 </script>
@@ -101,7 +101,7 @@ For Regular scripts async attribute works only for external scripts, but for mod
 ##Export and Import
 ### Syntax of export
 1. We can label any declaration as exported by placing export before it, be it a variable, function or a class.
-```
+```js
 // export an array
 export let months = ['Jan', 'Feb', 'Mar','Apr', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -116,7 +116,7 @@ export class User {
 }
 ```
 2. Also, we can put export separately.
-```
+```js
 function sayHi(user) {
   alert(`Hello, ${user}!`);
 }
@@ -129,19 +129,19 @@ export {sayHi, sayBye}; // a list of exported variables
 ```
 3. `As` keyword
 We use as to export under different names
-```
+```js
 export {sayHi as hi, sayBye as bye};
 ```
 ###Syntax of import
 1. Import in curly braces
-```
+```js
 import {sayHi, sayBye} from './say.js';
 
 sayHi('John'); // Hello, John!
 sayBye('John'); // Bye, John!
 ```
 2. Import all as one object
-```
+```js
 import * as say from './say.js';
 
 say.sayHi('John');
@@ -149,7 +149,7 @@ say.sayBye('John');
 ```
 3. Import with `As` keyword
    use as to import under different names.
-```
+```js
 import {sayHi as hi, sayBye as bye} from './say.js';
 
 hi('John'); // Hello, John!
@@ -168,14 +168,14 @@ Modules provide a special ```export default``` (“the default export”) syntax
 There may be only one export default per file.
 Put export default before the entity to export:
 
-```
+```js
 export default class User { // just add "default"
   constructor(name) {
     this.name = name;
   }
 }
 ```
-```
+```js
 import User from './user.js'; // not {User}, just User
 
 new User('John');
@@ -183,7 +183,7 @@ new User('John');
 As there may be at most one default export per file, the exported entity may have no name.
 
 For instance, these are all perfectly valid default exports:
-```
+```js
 export default class { // no class name
   constructor() { ... }
 }
@@ -195,7 +195,7 @@ export default function(user) { // no function name
 In some situations the default keyword is used to reference the default export.
 
 For example, to export a function separately from its definition:
-```
+```js
 function sayHi(user) {
   alert(`Hello, ${user}!`);
 }
@@ -205,7 +205,7 @@ export {sayHi as default};
 
 ```
 If we use asterisk to import all the dependencies, the default export can be reached like this:
-```
+```js
 import * as user from './user.js';
 
 let User = user.default; // the default export
@@ -215,7 +215,7 @@ new User('John');
 ###Re-export
 “Re-export” syntax export ... from ... allows to import things and immediately export them (possibly under another name), like this:
 
-```
+```js
 export {sayHi} from './say.js'; // re-export sayHi
 
 export {default as User} from './user.js'; // re-export default
@@ -227,7 +227,7 @@ When reexporting the deafult export we need to handle more cases:
 To re-export the default export, we have to write `export {default as User} from './user.js';`, as in the example above.
 2.` export * from './user.js'` re-exports only named exports, but ignores the default one.
 If we’d like to re-export both named and the default export, then two statements are needed:
-```
+```js
 export * from './user.js'; // to re-export named exports
 export {default} from './user.js'; // to re-export the default export
 ```
@@ -238,7 +238,7 @@ All of the above imports are called static imports, there are some things that s
 3. Import modules from regular script
 
 For these Dynamic modules are used, `import(modulePath)`, which get as an argument a string path for module, and returns a promise syntax is pretty straightforward
-```
+```html
 <script type="module">
   const moduleSpecifier = './utils.mjs';
   import(moduleSpecifier)
@@ -250,7 +250,7 @@ For these Dynamic modules are used, `import(modulePath)`, which get as an argume
     });
 </script>
 
-OR
+<!--OR-->
 
 <script type="module">
   (async () => {
@@ -264,7 +264,7 @@ OR
 </script>
 ```
 
-```
+```js
 async function execBigModule(condition) {
   if (condition) {
     const { funcA } = await import('./bigModuleA.js');
