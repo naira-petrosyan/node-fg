@@ -248,5 +248,31 @@ command in terminals. Other solution was to run command with relative path to wh
 npx command also has its flags, more on [DOC](https://www.npmjs.com/package/npx)
 
 ### nvm
+Node version manager
+`nvm install node` or `nvm install <version>`
+`nvm ls`
+`nvm use <version>`
+### semver
+Semver is the semantic versioner.
+Semver is used in npm to handle all the node.js module versioning problems.
+```js
+semver.valid('1.2.3') // true
+semver.valid('a.b.c') // false
+semver.clean('  =v1.2.3   ') // '1.2.3'
+semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
+semver.gt('1.2.3', '9.8.7')  // false
+semver.lt('1.2.3', '9.8.7')  // true
+```
 
-  
+A semver version is built from three numbers separated by dots .. These three numbers are referred to as major, minor and patch (reading left to right).
+The combination of these numbers represent an ordered version, where each of the three numbers are also ordered.
+Given a version number MAJOR.MINOR.PATCH, increment the:
+
+MAJOR version when you make incompatible API changes,
+MINOR version when you add functionality in a backwards compatible manner, and
+PATCH version when you make backwards compatible bug fixes.
+
+All packages published to npm are assumed to follow semver semantics. Hence, it is used by nearly every package author to define what dependency versions the package is bundled with.
+
+One major concept is Semver Ranges. Semver ranges are basically permitting newer version of packages to be installed automatically. Important bug fixes/patches can be received or distributed automatically, but major changes are forbidden to be installed.
+More on ranges, read [here](https://www.mariokandut.com/what-is-semantic-versioning-semver/)
