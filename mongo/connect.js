@@ -23,7 +23,7 @@ async function main() {
         // Make the appropriate DB calls
 
 
-        /*await createMember(client,
+       /* await createMember(client,
             {
                 first_name: "Naira",
                 last_name: "Petrosyan",
@@ -37,7 +37,7 @@ async function main() {
             }
         );*/
 
-        /*await updateOne(client,
+       /* await updateOne(client,
             {
                 first_name: 'Naira'
             },
@@ -45,16 +45,15 @@ async function main() {
                 topics: ['MongoDB'],
                 number_of_topics: 10
             },
-        );
-        */
-       /* await updateOne(client,
+        );*/
+        await updateOne(client,
             {
                 first_name: 'Levon'
             },
             {
-                is_contributing: false
+                is_contributing: [1, 2]
             },
-        );*/
+        );
 
         /*await updateOne(client,
             {
